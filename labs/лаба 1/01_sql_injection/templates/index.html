@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Лаборатория: вход без пароля</title>
+<style>
+body{background:#101827;color:#edf3ff;font:18px system-ui;max-width:850px;margin:45px auto;padding:20px}
+section{background:#1e293b;padding:25px;border-radius:16px;margin:20px 0}
+label{display:block;margin:15px 0}input,button{font:inherit;padding:12px;border-radius:8px}
+input{display:block;width:90%;margin-top:6px}button{background:#77e2c0;border:0;cursor:pointer}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#0b1220;padding:20px}
+.success{border:3px solid #77e2c0}.fail{border:2px solid #ff9898}a{color:#77e2c0}
+</style>
+<h1>Вход без пароля</h1>
+<p>Намеренно уязвимый учебный сайт. Только вымышленные данные.</p>
+<section>
+<form method="post">
+<label>Логин<input name="username" autocomplete="off" maxlength="200"></label>
+<label>Пароль<input name="password" type="password" autocomplete="off" maxlength="200"></label>
+<button>Войти</button>
+</form>
+<p>Обычный пользователь: <code>student / student123</code>.</p>
+</section>
+{% if query is not none %}
+{% if row %}
+<section class="success"><h2>Доступ разрешён</h2>
+<p>Добро пожаловать, <strong>{{ row[0] }}</strong>!</p>
+<p>Ваша роль: <strong>{{ row[1] }}</strong></p>
+{% if row[0] == 'admin' %}<h2>Вы вошли как администратор, не зная его пароля.</h2>{% endif %}
+</section>
+{% else %}
+<section class="fail"><h2>Доступ запрещён</h2><p>{{ error or 'Пользователь или пароль не подошли.' }}</p></section>
+{% endif %}
+<section><h2>Какой запрос выполнил сервер?</h2><pre>{{ query }}</pre>
+<p>В этом учебном стенде запрос показан специально. В реальном приложении так делать нельзя.</p></section>
+{% endif %}
+<p><a href="/">Начать заново</a> · Остановка сервера: Ctrl+C в его окне.</p>
+</html>
